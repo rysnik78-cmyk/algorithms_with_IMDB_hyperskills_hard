@@ -45,14 +45,33 @@ class MovieBase:
                     self.movie_base[i+1] = temp
                     swapped = True
 
+    def binary_search(self, value, low, high):
+        if low == high:
+            if self.movie_base[low][1] == value:
+                return self.movie_base[low][0] + ' - ' + str(self.movie_base[low][1]) + '\n'
+            else:
+                return ''
+        else:
+            mid = (low + high) // 2
+            if self.movie_base[mid][1] == value:
+                if low == mid:
+                    return self.movie_base[mid][0] + ' - ' + str(self.movie_base[mid][1]) + '\n' + self.binary_search(value, mid + 1, high)
+                elif mid > low:
+                    return self.binary_search(value, low, mid - 1) + self.movie_base[mid][0] + ' - ' + str(self.movie_base[mid][1]) + '\n' + self.binary_search(value, mid + 1, high)
+            elif self.movie_base[mid][1] > value:
+                return self.binary_search(value, low, mid - 1)
+            else:
+                return self.binary_search(value, mid + 1, high)
+
+
 def main():
     movie_base = MovieBase()
     movie_base.add_movies_from_csv_file('movies.csv')
     # movie_base.print_base()
     # print('-------------------------------------------------------------')
     movie_base.sort_base()
-    movie_base.print_base()
-
+    # movie_base.print_base()
+    print(movie_base.binary_search(6, 0, len(movie_base.movie_base)))
 
 if __name__ == '__main__':
     main()
