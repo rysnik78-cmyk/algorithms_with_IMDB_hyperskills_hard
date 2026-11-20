@@ -4,7 +4,7 @@ from scipy.constants import value
 
 class MovieBase:
     def __init__(self):
-        self.movie_base = {}
+        self.movie_base = []
 
     def add_movies_from_csv_file(self, path):
         with open(path, 'r', encoding="utf-8") as csv_file:
@@ -23,12 +23,12 @@ class MovieBase:
                 #     print(title)
                 #     print(rating)
 
-                self.movie_base[title] = rating
+                self.movie_base.append([title, rating])
         # print(len(self.movie_base))
 
 
     def print_base(self):
-        for title, rating in self.movie_base.items():
+        for title, rating in self.movie_base:
             print(title,'-', rating)
 
 
